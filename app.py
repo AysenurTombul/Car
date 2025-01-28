@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+app.secret_key = os.getenv('FLASK_SECRET_KEY', 'REMOVED')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///car_rental.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -108,7 +108,7 @@ def book_car_en():
     drop_date = request.form.get('drop_date')
     drop_time = request.form.get('drop_time')
 
-    flash(f"Aracınız {pickup_date} tarihinde {pickup_time}'da {pickup_office} ofisinden alınacak.", "success")
+    flash(f"Your car will be ready on {pickup_date} at {pickup_time} from {pickup_office} office.", "success")
     return redirect(url_for('search_cars_en', make='', transmission='', order_by=''))
 
 @app.route('/search_cars', methods=['GET'])
