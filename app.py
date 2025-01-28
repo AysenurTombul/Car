@@ -26,8 +26,12 @@ UPLOAD_FOLDER = 'static/uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# OAuth Ayarları
+db = SQLAlchemy(app)
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
 oauth = OAuth(app)
+
+# OAuth Ayarları
 google = oauth.register(
     name='google',
     client_id=app.config['GOOGLE_CLIENT_ID'],
@@ -36,7 +40,6 @@ google = oauth.register(
     authorize_url='https://accounts.google.com/o/oauth2/auth',
     client_kwargs={'scope': 'openid email profile'}
 )
-
 
 # Models
 class User(UserMixin, db.Model):
