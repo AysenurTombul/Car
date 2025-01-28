@@ -1,0 +1,12 @@
+from django.contrib import admin
+from .models import Office, Car
+
+@admin.register(Office)
+class OfficeAdmin(admin.ModelAdmin):
+list_display = ('name', 'city', 'latitude', 'longitude') # Liste görünümünde gösterilecek alanlar
+
+@admin.register(Car)
+class CarAdmin(admin.ModelAdmin):
+list_display = ('make', 'model', 'transmission', 'cost_per_day', 'office') # Liste görünümünde gösterilecek alanlar
+list_filter = ('transmission', 'office') # Filtreleme seçenekleri
+search_fields = ('make', 'model') # Arama yapılacak alanlar

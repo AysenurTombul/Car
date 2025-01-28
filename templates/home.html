@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <!-- Araç Kiralama Formu -->
+    <div class="card p-4 mb-4">
+        <h2 class="text-center">Araç Kirala</h2>
+        <form action="{{ url_for('book_car') }}" method="POST" class="row g-3 mt-3">
+            <div class="col-md-4">
+                <label for="pickup_office" class="form-label">Teslim Alma Ofisi</label>
+                <select class="form-select" id="pickup_office" name="pickup_office" required>
+                    <option value="İzmir Alsancak Şehir">İzmir Alsancak Şehir</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="pickup_date" class="form-label">Alış Tarihi</label>
+                <input type="date" class="form-control" id="pickup_date" name="pickup_date" required>
+            </div>
+            <div class="col-md-2">
+                <label for="pickup_time" class="form-label">Alış Saati</label>
+                <input type="time" class="form-control" id="pickup_time" name="pickup_time" required min="09:00"
+                    max="19:00" step="3600">
+            </div>
+            <div class="col-md-3">
+                <label for="drop_office" class="form-label">İade Ofisi</label>
+                <select class="form-select" id="drop_office" name="drop_office" required>
+                    <option value="İzmir Alsancak Şehir">İzmir Alsancak Şehir</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="drop_date" class="form-label">İade Tarihi</label>
+                <input type="date" class="form-control" id="drop_date" name="drop_date" required>
+            </div>
+            <div class="col-md-2">
+                <label for="drop_time" class="form-label">İade Saati</label>
+                <input type="time" class="form-control" id="drop_time" name="drop_time" required min="09:00" max="19:00"
+                    step="3600">
+            </div>
+            <div class="d-grid gap-2 col-md-3 mx-auto">
+                <button type="submit" class="btn btn-danger">Kirala</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Ofisler ve Harita -->
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Avis Ofisi</h3>
+            <p><strong>İzmir Alsancak Şehir</strong></p>
+            <p>İsmet Kaptan Mh, Gaziosmanpaşa Bulvarı N:7<br>Hilton İzmir 2.blok Z03, 35210 Konak/İzmir</p>
+            <p><strong>Telefon:</strong> 0232 441 44 17</p>
+            <p><strong>Çalışma Saatleri:</strong> 09:00 - 19:00</p>
+        </div>
+        <div class="col-md-8">
+            <div id="map" style="height: 400px; width: 100%;"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const pickupDate = document.getElementById("pickup_date");
+        const dropDate = document.getElementById("drop_date");
+        const today = new Date();
+        const maxDate = new Date();
+        maxDate.setDate(today.getDate() + 30); // Maksimum tarih 30 gün sonrası
+
+        // Minimum ve maksimum tarih ayarla
+        pickupDate.setAttribute("min", today.toISOString().split("T")[0]);
+        pickupDate.setAttribute("max", maxDate.toISOString().split("T")[0]);
+        dropDate.setAttribute("min", today.toISOString().split("T")[0]);
+        dropDate.setAttribute("max", maxDate.toISOString().split("T")[0]);
+
+        // Alış tarihine bağlı olarak iade tarihini sınırla
+        pickupDate.addEventListener("change", function () {
+            dropDate.setAttribute("min", pickupDate.value);
+        });
+    });
+
+    function initMap() {
+        const officeLocation = { lat: 38.422, lng: 27.131 }; // İzmir Alsancak koordinatları
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 12,
+            center: officeLocation,
+        });
+        new google.maps.Marker({
+            position: officeLocation,
+            map: map,
+            title: "İzmir Alsancak Ofisi",
+        });
+    }
+</script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCd-XocI0FXXPPHIQMAEUNK0yiwfWGKUSk&callback=initMap"></script>
+{% endblock %}

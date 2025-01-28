@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Arama Sonuçları</h1>
+
+    <!-- Filter Options -->
+    <form method="GET" action="{{ url_for('search_cars') }}" class="mb-4">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="make" class="form-label">Araç Tipi:</label>
+                <select class="form-select" id="make" name="make">
+                    <option value="" {% if not request.args.get('make') %}selected{% endif %}>Tüm Araçlar</option>
+                    <option value="Renault" {% if request.args.get('make')=='Renault' %}selected{% endif %}>Renault
+                    </option>
+                    <option value="Fiat" {% if request.args.get('make')=='Fiat' %}selected{% endif %}>Fiat</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="order_by" class="form-label">Sırala:</label>
+                <select class="form-select" id="order_by" name="order_by">
+                    <option value="low_price" {% if request.args.get('order_by')=='low_price' %}selected{% endif %}>
+                        En Düşük Fiyat</option>
+                    <option value="high_price" {% if request.args.get('order_by')=='high_price' %}selected{% endif %}>
+                        En Yüksek Fiyat</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="transmission" class="form-label">Şanzıman Tipi:</label>
+                <select class="form-select" id="transmission" name="transmission">
+                    <option value="" {% if not request.args.get('transmission') %}selected{% endif %}>Tümü</option>
+                    <option value="Manual" {% if request.args.get('transmission')=='Manual' %}selected{% endif %}>
+                        Manuel</option>
+                    <option value="Automatic" {% if request.args.get('transmission')=='Automatic' %}selected{% endif %}>
+                        Otomatik</option>
+                </select>
+            </div>
+        </div>
+        <div class="text-end mt-3">
+            <button type="submit" class="btn btn-primary">Filtrele</button>
+        </div>
+    </form>
+
+    <!-- Display Cars -->
+    <div class="row">
+        {% for car in cars %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm p-3 h-100">
+                <div class="card-body">
+                    <span class="badge bg-success text-light">Ekonomik</span>
+                    <h5 class="card-title text-danger mt-2">{{ car.make }} {{ car.model }}</h5>
+                    <p class="card-text text-muted">Tüm Özellikler/Kiralama Şartları</p>
+                    <div class="d-flex justify-content-center mb-3">
+                        <img src="{{ car.image_url if car.image_url else 'https://via.placeholder.com/300x200' }}"
+                            class="img-fluid rounded" alt="{{ car.make }} {{ car.model }}" style="max-height: 150px;">
+                    </div>
+                    <hr>
+                    <ul class="list-unstyled mb-3">
+                        <li><strong>Yakıt Tipi:</strong> Dizel/Benzin</li>
+                        <li><strong>Şanzıman:</strong> {{ car.transmission }}</li>
+                        <li><strong>Depozito:</strong> {{ car.deposit }} TL</li>
+                        <li><strong>Kilometre Limiti:</strong> {{ car.mileage }} Km</li>
+                        <li><strong>Yaş Sınırı:</strong> {{ car.age_limit }} Yaş ve Üstü</li>
+                    </ul>
+                    <hr>
+                    <p class="mb-2 text-danger fs-5"><strong>{{ car.cost_per_day }} TL</strong></p>
+                    <div class="d-grid">
+                        <a href="#" class="btn btn-danger btn-block">Hemen Öde</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

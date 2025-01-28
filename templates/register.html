@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Kayıt Ol</h1>
+<form method="POST" action="{{ url_for('register') }}" enctype="multipart/form-data">
+    <label for="username">Kullanıcı Adı</label>
+    <input type="text" name="username" required>
+    <label for="email">E-posta</label>
+    <input type="email" name="email" required>
+    <label for="password">Şifre</label>
+    <input type="password" name="password" required>
+    <label for="country">Ülke</label>
+    <input type="text" name="country" required>
+    <label for="city">Şehir</label>
+    <input type="text" name="city" required>
+    <label for="profile_picture">Profil Fotoğrafı (isteğe bağlı)</label>
+    <input type="file" name="profile_picture">
+    <button type="submit">Kayıt Ol</button>
+</form>
+<p>Zaten bir hesabınız var mı? <a href="{{ url_for('login') }}">Buradan giriş yapın</a>.</p>
+{% endblock %}
