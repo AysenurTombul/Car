@@ -15,7 +15,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Ortam değişkenlerinden Google OAuth bilgilerini yükle
 app.config['GOOGLE_CLIENT_ID'] = os.getenv('GOOGLE_CLIENT_ID')
 app.config['GOOGLE_CLIENT_SECRET'] = os.getenv('GOOGLE_CLIENT_SECRET')
-
+app.config['GOOGLE_MAPS_API_KEY'] = os.getenv('GOOGLE_MAPS_API_KEY')
 if not app.config['GOOGLE_CLIENT_ID'] or not app.config['GOOGLE_CLIENT_SECRET']:
     raise ValueError("Google OAuth Client ID ve Secret ortam değişkenlerinde tanımlanmalıdır.")
 
@@ -77,13 +77,13 @@ def load_user(user_id):
 def home():
     user = current_user if current_user.is_authenticated else None
     offices = Office.query.all() if not user else Office.query.filter_by(city=user.city).all()
-    return render_template('home.html', user=user, offices=offices)
+    return render_template('home.html', user=user, offices=offices,google_maps_api_key=app.config['GOOGLE_MAPS_API_KEY'])
 
 @app.route('/_en')
 def home_en():
     user = current_user if current_user.is_authenticated else None
     offices = Office.query.all() if not user else Office.query.filter_by(city=user.city).all()
-    return render_template('home_en.html', user=user, offices=offices)
+    return render_template('home_en.html', user=user, offices=offices,google_maps_api_key=app.config['GOOGLE_MAPS_API_KEY'])
 
 @app.route('/book_car', methods=['POST'])
 def book_car():
