@@ -3,7 +3,7 @@
 <div class="container mt-4">
     <h1 class="text-center mb-4">Search Results</h1>
 
-    <!-- Filter Options -->
+   
     <form method="GET" action="{{ url_for('search_cars') }}" class="mb-4">
         <div class="row">
             <div class="col-md-4">
@@ -40,7 +40,7 @@
         </div>
     </form>
 
-    <!-- Display Cars -->
+   
     <div class="row">
         {% for car in cars %}
         <div class="col-md-4 mb-4">
