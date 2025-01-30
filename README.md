@@ -15,3 +15,5 @@ Bootstrap 5 & Jinja2 Templates
 
 The encountered problem is that the login and register functionalities are not storing data in the database
 Any registration attempt does not persist user information in the database. Additionally, we were not able to fully set up the database.
+
+https://www.youtube.com/watch?v=RQ96k8p5n7g
