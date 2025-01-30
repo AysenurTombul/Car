@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container mt-4">
-    <!-- Car Rental Form -->
+   
     <div class="card p-4 mb-4">
         <h2 class="text-center">Rent a Car</h2>
         <form action="{{ url_for('book_car_en') }}" method="POST" class="row g-3 mt-3">
@@ -43,7 +43,7 @@
         </form>
     </div>
 
-    <!-- Offices and Map -->
+   
     <div class="row">
         <div class="col-md-4">
             <h3>Avis Office</h3>
@@ -64,22 +64,22 @@
         const dropDate = document.getElementById("drop_date");
         const today = new Date();
         const maxDate = new Date();
-        maxDate.setDate(today.getDate() + 30); // Maksimum tarih 30 gün sonrası
+        maxDate.setDate(today.getDate() + 30); 
 
-        // Minimum ve maksimum tarih ayarla
+       
         pickupDate.setAttribute("min", today.toISOString().split("T")[0]);
         pickupDate.setAttribute("max", maxDate.toISOString().split("T")[0]);
         dropDate.setAttribute("min", today.toISOString().split("T")[0]);
         dropDate.setAttribute("max", maxDate.toISOString().split("T")[0]);
 
-        // Alış tarihine bağlı olarak iade tarihini sınırla
+       
         pickupDate.addEventListener("change", function () {
             dropDate.setAttribute("min", pickupDate.value);
         });
     });
 
     function initMap() {
-        const officeLocation = { lat: 38.422, lng: 27.131 }; // İzmir Alsancak koordinatları
+        const officeLocation = { lat: 38.422, lng: 27.131 }; 
         const map = new google.maps.Map(document.getElementById("map"), {
             zoom: 12,
             center: officeLocation,
@@ -94,20 +94,18 @@
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap"></script>
 
-<script type="text/javascript">// <![CDATA[
-    //run this code when the page loads
-    //determine if the user's browser has location services enabled. If not, show a message
+<script type="text/javascript">
     function getGeolocation() { 
         if(navigator.geolocation){
-            //if location services are turned on, continue and call the getUserCoordinates function below
+           
                 navigator.geolocation.getCurrentPosition(getUserCoodinates);  
         }else{
             alert('You must enable your device\'s location services in order to run this application.');
         }
     }  
-    //function is passed a position object which contains the lat and long value
+    
     function getUserCoodinates(position){  
-        //set the application's text inputs LAT and LONG = to the user's lat and long position
+        
     }
     getGeolocation();
 // ]]></script>
