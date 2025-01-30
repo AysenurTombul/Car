@@ -1,6 +1,6 @@
-from app import app, db, Car  # app, db ve Car modelini içe aktar
+from app import app, db, Car  
 
-# Arabaları ekle
+
 cars = [
     Car(
         make="Toyota",
@@ -59,7 +59,7 @@ cars = [
     )
 ]
 
-# Uygulama bağlamında veritabanı işlemleri
+
 with app.app_context():
     db.session.add_all(cars)
     db.session.commit()
