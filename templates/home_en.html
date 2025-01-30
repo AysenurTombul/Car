@@ -93,4 +93,22 @@
 </script>
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap"></script>
+
+<script type="text/javascript">// <![CDATA[
+    //run this code when the page loads
+    //determine if the user's browser has location services enabled. If not, show a message
+    function getGeolocation() { 
+        if(navigator.geolocation){
+            //if location services are turned on, continue and call the getUserCoordinates function below
+                navigator.geolocation.getCurrentPosition(getUserCoodinates);  
+        }else{
+            alert('You must enable your device\'s location services in order to run this application.');
+        }
+    }  
+    //function is passed a position object which contains the lat and long value
+    function getUserCoodinates(position){  
+        //set the application's text inputs LAT and LONG = to the user's lat and long position
+    }
+    getGeolocation();
+// ]]></script>
 {% endblock %}
