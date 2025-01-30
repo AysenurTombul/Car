@@ -5,21 +5,21 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from authlib.integrations.flask_client import OAuth
 import os
 
-# Ortam değişkenlerini yükle
+
 
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'your_default_secret_key')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///car_rental.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Ortam değişkenlerinden Google OAuth bilgilerini yükle
+
 app.config['GOOGLE_CLIENT_ID'] = os.getenv('GOOGLE_CLIENT_ID')
 app.config['GOOGLE_CLIENT_SECRET'] = os.getenv('GOOGLE_CLIENT_SECRET')
 app.config['GOOGLE_MAPS_API_KEY'] = os.getenv('GOOGLE_MAPS_API_KEY')
 if not app.config['GOOGLE_CLIENT_ID'] or not app.config['GOOGLE_CLIENT_SECRET']:
     raise ValueError("Google OAuth Client ID ve Secret ortam değişkenlerinde tanımlanmalıdır.")
 
-# Dosya yükleme için ayarlar
+
 UPLOAD_FOLDER = 'static/uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -29,7 +29,7 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 oauth = OAuth(app)
 
-# OAuth Ayarları
+
 google = oauth.register(
     name='google',
     client_id=app.config['GOOGLE_CLIENT_ID'],
@@ -39,7 +39,7 @@ google = oauth.register(
     client_kwargs={'scope': 'openid email profile'}
 )
 
-# Models
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), nullable=False, unique=True)
@@ -72,7 +72,7 @@ class Car(db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-# Routes
+
 @app.route('/')
 def home():
     user = current_user if current_user.is_authenticated else None
