@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container mt-4">
-    <!-- Araç Kiralama Formu -->
+
     <div class="card p-4 mb-4">
         <h2 class="text-center">Araç Kirala</h2>
         <form action="{{ url_for('book_car') }}" method="POST" class="row g-3 mt-3">
@@ -41,7 +41,7 @@
         </form>
     </div>
 
-    <!-- Ofisler ve Harita -->
+
     <div class="row">
         <div class="col-md-4">
             <h3>Avis Ofisi</h3>
@@ -62,22 +62,22 @@
         const dropDate = document.getElementById("drop_date");
         const today = new Date();
         const maxDate = new Date();
-        maxDate.setDate(today.getDate() + 30); // Maksimum tarih 30 gün sonrası
+        maxDate.setDate(today.getDate() + 30); 
 
-        // Minimum ve maksimum tarih ayarla
+        
         pickupDate.setAttribute("min", today.toISOString().split("T")[0]);
         pickupDate.setAttribute("max", maxDate.toISOString().split("T")[0]);
         dropDate.setAttribute("min", today.toISOString().split("T")[0]);
         dropDate.setAttribute("max", maxDate.toISOString().split("T")[0]);
 
-        // Alış tarihine bağlı olarak iade tarihini sınırla
+        
         pickupDate.addEventListener("change", function () {
             dropDate.setAttribute("min", pickupDate.value);
         });
     });
 
     function initMap() {
-        const officeLocation = { lat: 38.422, lng: 27.131 }; // İzmir Alsancak koordinatları
+        const officeLocation = { lat: 38.422, lng: 27.131 }; 
         const map = new google.maps.Map(document.getElementById("map"), {
             zoom: 12,
             center: officeLocation,
