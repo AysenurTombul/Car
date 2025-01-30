@@ -1,54 +1,56 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container mt-4">
-    <!-- Araç Kiralama Formu -->
+    <!-- Car Rental Form -->
     <div class="card p-4 mb-4">
-        <h2 class="text-center">Araç Kirala</h2>
-        <form action="{{ url_for('book_car') }}" method="POST" class="row g-3 mt-3">
+        <h2 class="text-center">Rent a Car</h2>
+        <form action="{{ url_for('book_car_en') }}" method="POST" class="row g-3 mt-3">
             <div class="col-md-4">
-                <label for="pickup_office" class="form-label">Teslim Alma Ofisi</label>
+                <label for="pickup_office" class="form-label">Pick-up Office</label>
                 <select class="form-select" id="pickup_office" name="pickup_office" required>
-                    <option value="İzmir Alsancak Şehir">İzmir Alsancak Şehir</option>
+                    <option value="Izmir Alsancak City">Izmir Alsancak City</option>
                 </select>
             </div>
             <div class="col-md-3">
-                <label for="pickup_date" class="form-label">Alış Tarihi</label>
-                <input type="date" class="form-control" id="pickup_date" name="pickup_date" required>
+                <label for="pickup_date" class="form-label">Pick-up Date</label>
+                <input type="date" class="form-control" id="pickup_date" name="pickup_date" required
+                    min="{{ current_date }}" max="{{ max_date }}">
             </div>
             <div class="col-md-2">
-                <label for="pickup_time" class="form-label">Alış Saati</label>
+                <label for="pickup_time" class="form-label">Pick-up Time</label>
                 <input type="time" class="form-control" id="pickup_time" name="pickup_time" required min="09:00"
                     max="19:00" step="3600">
             </div>
             <div class="col-md-3">
-                <label for="drop_office" class="form-label">İade Ofisi</label>
+                <label for="drop_office" class="form-label">Drop-off Office</label>
                 <select class="form-select" id="drop_office" name="drop_office" required>
-                    <option value="İzmir Alsancak Şehir">İzmir Alsancak Şehir</option>
+                    <option value="Izmir Alsancak City">Izmir Alsancak City</option>
                 </select>
             </div>
             <div class="col-md-3">
-                <label for="drop_date" class="form-label">İade Tarihi</label>
-                <input type="date" class="form-control" id="drop_date" name="drop_date" required>
+                <label for="drop_date" class="form-label">Drop-off Date</label>
+                <input type="date" class="form-control" id="drop_date" name="drop_date" required
+                    min="{{ current_date }}" max="{{ max_date }}">
             </div>
             <div class="col-md-2">
-                <label for="drop_time" class="form-label">İade Saati</label>
+                <label for="drop_time" class="form-label">Drop-off Time</label>
                 <input type="time" class="form-control" id="drop_time" name="drop_time" required min="09:00" max="19:00"
                     step="3600">
             </div>
             <div class="d-grid gap-2 col-md-3 mx-auto">
-                <button type="submit" class="btn btn-danger">Kirala</button>
+                <button type="submit" class="btn btn-danger">Rent</button>
             </div>
         </form>
     </div>
 
-    <!-- Ofisler ve Harita -->
+    <!-- Offices and Map -->
     <div class="row">
         <div class="col-md-4">
-            <h3>Avis Ofisi</h3>
-            <p><strong>İzmir Alsancak Şehir</strong></p>
-            <p>İsmet Kaptan Mh, Gaziosmanpaşa Bulvarı N:7<br>Hilton İzmir 2.blok Z03, 35210 Konak/İzmir</p>
-            <p><strong>Telefon:</strong> 0232 441 44 17</p>
-            <p><strong>Çalışma Saatleri:</strong> 09:00 - 19:00</p>
+            <h3>Avis Office</h3>
+            <p><strong>Izmir Alsancak City</strong></p>
+            <p>İsmet Kaptan Mh, Gaziosmanpaşa Bulvarı N:7<br>Hilton Izmir 2nd block Z03, 35210 Konak/Izmir</p>
+            <p><strong>Phone:</strong> 0232 441 44 17</p>
+            <p><strong>Working Hours:</strong> 09:00 - 19:00</p>
         </div>
         <div class="col-md-8">
             <div id="map" style="height: 400px; width: 100%;"></div>
@@ -91,21 +93,22 @@
 </script>
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap"></script>
+
 <script type="text/javascript">// <![CDATA[
-        //run this code when the page loads
-        //determine if the user's browser has location services enabled. If not, show a message
-        function getGeolocation() { 
-            if(navigator.geolocation){
-                //if location services are turned on, continue and call the getUserCoordinates function below
-                 navigator.geolocation.getCurrentPosition(getUserCoodinates);  
-            }else{
-                alert('You must enable your device\'s location services in order to run this application.');
-            }
-        }  
-        //function is passed a position object which contains the lat and long value
-        function getUserCoodinates(position){  
-            //set the application's text inputs LAT and LONG = to the user's lat and long position
+    //run this code when the page loads
+    //determine if the user's browser has location services enabled. If not, show a message
+    function getGeolocation() { 
+        if(navigator.geolocation){
+            //if location services are turned on, continue and call the getUserCoordinates function below
+                navigator.geolocation.getCurrentPosition(getUserCoodinates);  
+        }else{
+            alert('You must enable your device\'s location services in order to run this application.');
         }
-        getGeolocation();
-    // ]]></script>
+    }  
+    //function is passed a position object which contains the lat and long value
+    function getUserCoodinates(position){  
+        //set the application's text inputs LAT and LONG = to the user's lat and long position
+    }
+    getGeolocation();
+// ]]></script>
 {% endblock %}
